@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FinTrack — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:       #0f172a;
+  --ink-2:     #334155;
+  --muted:     #64748b;
+  --border:    #e2e8f0;
+  --bg:        #f8fafc;
+  --surface:   #ffffff;
+  --accent:    #10b981;
+  --accent-dk: #059669;
+  --accent-lt: #d1fae5;
+  --red:       #ef4444;
+  --r:         10px;
+}
+
+html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; }
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* ── LEFT BRAND PANEL ─────────────────────────────── */
+.left {
+  width: 440px;
+  flex-shrink: 0;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.left::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.07);
+}
+
+.left::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-mark {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.brand-mark svg {
+  width: 18px; height: 18px;
+  fill: none; stroke: white;
+  stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.brand-name {
+  font-size: 19px; font-weight: 700;
+  color: white; letter-spacing: -0.3px;
+}
+
+.left-mid {
+  position: relative;
+  z-index: 1;
+}
+
+.left-mid h2 {
+  font-size: 32px; font-weight: 700;
+  color: white; line-height: 1.25;
+  letter-spacing: -0.6px;
+  margin-bottom: 14px;
+}
+
+.left-mid p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+}
+
+.features {
+  display: flex; flex-direction: column; gap: 12px;
+  position: relative; z-index: 1;
+}
+
+.feature {
+  display: flex; align-items: flex-start; gap: 12px;
+}
+
+.feature-icon {
+  width: 32px; height: 32px; flex-shrink: 0;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.feature-icon svg {
+  width: 15px; height: 15px;
+  fill: none; stroke: var(--accent);
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.feature-text strong {
+  display: block;
+  font-size: 13px; font-weight: 600; color: white;
+  margin-bottom: 1px;
+}
+
+.feature-text span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.42);
+}
+
+/* ── RIGHT FORM PANEL ─────────────────────────────── */
+.right {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 48px 40px;
+}
+
+.form-wrap {
+  width: 100%; max-width: 380px;
+}
+
+.form-wrap h1 {
+  font-size: 26px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.form-wrap .sub {
+  font-size: 14px; color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.field { margin-bottom: 18px; }
+
+.field label {
+  display: block; font-size: 13px; font-weight: 500;
+  color: var(--ink-2); margin-bottom: 7px;
+}
+
+.field input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  font-size: 14px; font-family: inherit;
+  color: var(--ink); background: #fafafa;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.field input:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.12);
+}
+
+.field input.err { border-color: var(--red); }
+
+.field-err {
+  font-size: 12px; color: var(--red);
+  margin-top: 5px; display: none;
+}
+.field-err.show { display: block; }
+
+.field-row {
+  display: flex; justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.link {
+  font-size: 13px; color: var(--accent); font-weight: 500;
+  text-decoration: none;
+}
+.link:hover { text-decoration: underline; }
+
+.alert {
+  padding: 11px 14px; border-radius: var(--r);
+  font-size: 13px; margin-bottom: 20px;
+  display: none;
+  background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;
+}
+.alert.show { display: block; }
+
+.hint {
+  background: var(--accent-lt);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: var(--r); padding: 11px 14px;
+  margin-bottom: 24px; font-size: 13px; color: #065f46;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.hint button {
+  background: none; border: none;
+  color: var(--accent-dk); font-size: 13px; font-weight: 600;
+  cursor: pointer; text-decoration: underline;
+  font-family: inherit; padding: 0;
+}
+
+.btn {
+  width: 100%; padding: 12px;
+  background: var(--ink); color: white;
+  border: none; border-radius: var(--r);
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: background 0.18s;
+  margin-top: 4px;
+}
+.btn:hover { background: #1e293b; }
+.btn:active { transform: scale(0.99); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+.form-foot {
+  text-align: center; margin-top: 24px;
+  font-size: 13px; color: var(--muted);
+}
+.form-foot a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.form-foot a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 820px) {
+  .left { display: none; }
+  .right { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── LEFT PANEL ── -->
+<div class="left">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    </div>
+    <span class="brand-name">FinTrack</span>
+  </div>
+
+  <div class="left-mid">
+    <h2>Your money,<br>your control.</h2>
+    <p>Track every transaction, set smart budgets, and get AI-powered insights tailored to your financial goals.</p>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div class="feature-text">
+        <strong>Real-time tracking</strong>
+        <span>See every transaction categorized automatically</span>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <div class="feature-text">
+        <strong>Budget alerts</strong>
+        <span>Know before you overspend, not after</span>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 7L13.5 15.5L8.5 10.5L2 17"/><path d="M16 7h6v6"/></svg>
+      </div>
+      <div class="feature-text">
+        <strong>30-day forecast</strong>
+        <span>Predict your balance before month end</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RIGHT FORM ── -->
+<div class="right">
+  <div class="form-wrap">
+    <h1>Welcome back</h1>
+    <p class="sub">Sign in to your FinTrack account.</p>
+
+    <div class="hint">
+      <span>Try the demo account</span>
+      <button onclick="fillDemo()">Use demo credentials</button>
+    </div>
+
+    <div class="alert" id="formAlert"></div>
+
+    <div class="field">
+      <label for="email">Email address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email"/>
+      <div class="field-err" id="emailErr">Please enter a valid email address.</div>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+      <div class="field-row">
+        <a class="link" href="#">Forgot password?</a>
+      </div>
+      <div class="field-err" id="passErr">Password is required.</div>
+    </div>
+
+    <button class="btn" id="loginBtn" onclick="handleLogin()">Sign in</button>
+
+    <div class="form-foot">
+      Don't have an account? <a href="/signup">Create one free</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function fillDemo() {
+  document.getElementById('email').value = 'demo@fintrack.com';
+  document.getElementById('password').value = 'demo1234';
+}
+
+function validate() {
+  let ok = true;
+  const email = document.getElementById('email');
+  const password = document.getElementById('password');
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+  email.classList.toggle('err', !emailOk);
+  document.getElementById('emailErr').classList.toggle('show', !emailOk);
+  if (!emailOk) ok = false;
+  const passOk = password.value.length > 0;
+  password.classList.toggle('err', !passOk);
+  document.getElementById('passErr').classList.toggle('show', !passOk);
+  if (!passOk) ok = false;
+  return ok;
+}
+
+async function handleLogin() {
+  if (!validate()) return;
+  const btn = document.getElementById('loginBtn');
+  const alertEl = document.getElementById('formAlert');
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+  alertEl.className = 'alert';
+
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value
+      })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      window.location.href = data.redirect || '/dashboard';
+    } else {
+      alertEl.textContent = data.error || 'Invalid email or password.';
+      alertEl.className = 'alert show';
+    }
+  } catch {
+    alertEl.textContent = 'Connection error. Make sure the server is running.';
+    alertEl.className = 'alert show';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sign in';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+</script>
+</body>
+</html>
